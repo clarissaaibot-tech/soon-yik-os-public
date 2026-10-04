@@ -125,23 +125,133 @@
       margin-bottom: 10px;
       border-left: 3px solid #ff6b6b;
     }
-    .commit-project-name {
-      font-weight: 600;
-      font-size: 14px;
+    .hl-card {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.02));
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-left: 4px solid #ffd700;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+    .hl-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
       color: #ffd700;
+      text-transform: uppercase;
       margin-bottom: 8px;
     }
-    .commit-row {
-      padding: 5px 0;
+    .hl-action {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .hl-project {
+      font-size: 12px;
+      color: #a8acb1;
+      margin-bottom: 8px;
+    }
+    .hl-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .hl-due {
+      font-size: 12px;
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+    .hl-priority {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: #ff6b6b;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .hl-axes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .axis-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 8px;
+      background: rgba(77, 171, 247, 0.15);
+      color: #4dabf7;
+      font-weight: 600;
+    }
+    .axis-tag.untagged {
+      background: rgba(255, 107, 107, 0.15);
+      color: #ff6b6b;
+    }
+    .hl-why {
+      font-size: 11px;
+      color: #a8acb1;
+      font-style: italic;
+      margin-top: 4px;
+    }
+    .balance-section {
+      padding-top: 8px;
       border-top: 1px solid #2d3340;
     }
-    .commit-row:first-child { border-top: none; padding-top: 0; }
-    .commit-snippet {
-      font-size: 12px;
-      color: #c9ccd1;
+    .balance-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #a8acb1;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
-    .commit-badges {
-      margin-top: 3px;
+    .axis-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 30px;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .axis-name {
+      color: #c9ccd1;
+      font-weight: 600;
+    }
+    .axis-bar-bg {
+      background: #1c1f26;
+      border-radius: 6px;
+      height: 14px;
+      overflow: hidden;
+    }
+    .axis-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.3s;
+    }
+    .axis-count {
+      font-weight: 700;
+      color: #ffffff;
+      text-align: right;
+    }
+    .balance-msg {
+      font-size: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+    .balance-msg.warn {
+      background: rgba(255, 107, 107, 0.1);
+      color: #ff8787;
+      border-left: 3px solid #ff6b6b;
+    }
+    .balance-msg.info {
+      background: rgba(77, 171, 247, 0.08);
+      color: #74c0fc;
+      border-left: 3px solid #4dabf7;
     }
     .badge {
       display: inline-block;
@@ -386,80 +496,45 @@
 
     <!-- LEFT: WHAT I COMMITTED TO (middle position) -->
     <div class="pane left">
-      <h2>📌 What I committed to <span class="count-pill">26</span></h2>
+      <h2>🎯 北极星 <span class="count-pill">37</span></h2>
       
-            <div class="commit-project">
-              <div class="commit-project-name">LSS5+ Lessons Learned — Jaks × CPEEC (ChinaPower subsidiary) Model</div>
-              <div class="commit-row">  <div class="commit-snippet">Sat 03 Oct · - `Opportunities/LSS5+ Lessons Learned — Jaks × CPEEC (ChinaPower subsidiary) Model` — already ex...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
+        <div class="hl-card">
+          <div class="hl-label">🎯 Highest-leverage move</div>
+          <div class="hl-action">Bamboo Plantation: 贺总 advisor arrival coordination</div>
+          <div class="hl-project">Bamboo Plantation (KunMing) — Biomass feedstock for 30MW</div>
+          <div class="hl-meta">
+            <span class="hl-due">due in 16 days (Tue 20 Oct)</span>
+            <span class="hl-priority">High</span>
+          </div>
+          <div class="hl-axes"><span class="axis-tag">💰 100mil (Capital)</span><span class="axis-tag">🌏 体验世界 (Experience)</span></div>
+          <div class="hl-why">Why: moves the lightest axis + due soonest.</div>
+        </div>
+        <div class="balance-section">
+          <div class="balance-label">Active effort across the 3 goals</div>
+          
+            <div class="axis-row">
+              <div class="axis-name">Capital</div>
+              <div class="axis-bar-bg">
+                <div class="axis-bar-fill" style="width: 100.0%; background: #51cf66;"></div>
+              </div>
+              <div class="axis-count">29</div>
             </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Blueprint Orientation Refresh (2026 H2)</div>
-              <div class="commit-row">  <div class="commit-snippet">Sat 03 Oct · - `Opportunities/Blueprint Orientation Refresh (2026 H2)` — already exists; append 22/42 sign-up ...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
+            <div class="axis-row">
+              <div class="axis-name">People</div>
+              <div class="axis-bar-bg">
+                <div class="axis-bar-fill" style="width: 20.689655172413794%; background: #4dabf7;"></div>
+              </div>
+              <div class="axis-count">6</div>
             </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Bamboo Plantation (KunMing) — Biomass feedstock for 30MW</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Bamboo Plantation: 贺总 advisor arrival coordination · due in 16d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge pending">PENDING</span></div></div>
+            <div class="axis-row">
+              <div class="axis-name">Experience</div>
+              <div class="axis-bar-bg">
+                <div class="axis-bar-fill" style="width: 6.896551724137931%; background: #ffd700;"></div>
+              </div>
+              <div class="axis-count">2</div>
             </div>
-            <div class="commit-project">
-              <div class="commit-project-name">WD Purchasing Centralisation (PO approval through Ms Sue)</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout · due in 12d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge in-progress">IN PROGRESS</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Purchasing Guarantor (PG) Removal — 35 PGs</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · 35 PGs across 5 companies (incl. quarry side) collection back · due in 12d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge in-progress">IN PROGRESS</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Targeted PG removal list (PG Removal project) · due in 12d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge in-progress">IN PROGRESS</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `Purchasing Guarantor (PG) Removal — 35 PGs` — target 16/10/2026 captured.</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">LSS6 / CRESS Submission Strategy (Samaiden + Soonyik)</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Show LSS6 model to Nahar · due in 2d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge pending">PENDING</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · LSS6 final submission · due in 87d</div>  <div class="commit-badges"><span class="badge pending">PENDING</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · LSS6 P1 vs CRESS pivot decision framework · due in 1d</div>  <div class="commit-badges"><span class="badge critical">CRITICAL</span><span class="badge pending">PENDING</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">ProX Security Operations (Option 1 — 6% royalty via WDTF)</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · ProX: execute security services contract (Option 1 — 6% royalty via WDTF) · due in 5d</div>  <div class="commit-badges"><span class="badge critical">CRITICAL</span><span class="badge pending">PENDING</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Masavan Acquisition — WD 1st Industrial Project</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Masavan call-off decision · due in 1d</div>  <div class="commit-badges"><span class="badge critical">CRITICAL</span><span class="badge pending">PENDING</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Masavan escalation if no decision · due in 2d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge pending">PENDING</span></div></div><div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `Projects/Masavan Acquisition — WD 1st Industrial Project` → Status changed to On Hold (5/10 go...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · BE120 3.0 cohort launch (Tiamo 6-month programme) · due in 27d</div>  <div class="commit-badges"><span class="badge high">HIGH</span><span class="badge in-progress">IN PROGRESS</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · Twin Hi Tech October milestone (RM2.7M disbursed) · due in 27d</div>  <div class="commit-badges"><span class="badge critical">CRITICAL</span><span class="badge in-progress">IN PROGRESS</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">WD Cash-Flow Restructure</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `WD Cash-Flow Restructure` (validating) — physical meeting 2/10 captured.</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div><div class="commit-row">  <div class="commit-snippet">Thu 01 Oct · - 2/10 (Fri) shareholder meeting — captured as `Opportunities/WD Cash-Flow Restructure`.</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div><div class="commit-row">  <div class="commit-snippet">Tue 29 Sep · - Linked: `Projects/Masavan Acquisition` (let-go #2), `Opportunities/WD Cash-Flow Restructure`, `...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Family Plantation Expansion</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `Family Plantation Expansion` — 2/10 update from father captured.</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">ACH Costing Analysis + Up-to-Date Costing Review</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `ACH Costing Analysis + Up-to-Date Costing Review` (planning).</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature</div>
-              <div class="commit-row">  <div class="commit-snippet">Fri 02 Oct · - `Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature` (urgent).</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">SoonYik OS Build + WD Operating System Restructure</div>
-              <div class="commit-row">  <div class="commit-snippet">Thu 01 Oct · - Linked: `Projects/SoonYik OS Build + WD Operating System Restructure` (Jing Er mandate noted in...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">Suzanne (SN Creative) — Soonyik 30% Investment</div>
-              <div class="commit-row">  <div class="commit-snippet">Wed 30 Sep · - Linked: `Projects/LSS6 / CRESS Submission Strategy` (CRESS pivot logic added), `Projects/Twin H...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">China EPCC Consortium Outreach — KahSheng Visit Tour</div>
-              <div class="commit-row">  <div class="commit-snippet">Wed 30 Sep · - Linked: `Projects/LSS6 / CRESS Submission Strategy` (CRESS pivot logic added), `Projects/Twin H...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
-            <div class="commit-project">
-              <div class="commit-project-name">WD Transport Department — Let-Go Decision</div>
-              <div class="commit-row">  <div class="commit-snippet">Tue 29 Sep · - Transport department — no project record yet (created 2026-10-04: `Opportunities/WD Transport D...</div>  <div class="commit-badges"><span class="badge note">DAILY NOTE</span></div></div>
-            </div>
+          <div class="balance-msg info">💡 Your effort is <b>14×</b> heavier on 100mil than 体验世界. Consider one new effort on the lighter goal.</div>
+        </div>
     </div>
 
     <!-- RIGHT: ONGOING (rightmost) -->
@@ -478,5 +553,5 @@
   <footer>
     Source: Airtable base SOON YIK OS (appXP8uHbozypGwMw) + vault 01_Daily/ · Auto-generated by <code>build_dashboard.py</code>
   </footer>
-<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-04 11:03 MYT</div></body>
+<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-04 11:25 MYT</div></body>
 </html>
