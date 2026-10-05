@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="dashboard-action-endpoint" content="https://soon-yik-os-actions.vercel.app/api/dashboard-action">
   <title>SOON YIK OS — Weekly Dashboard</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,14 +32,14 @@
       color: #e8eaed;
     }
     .grid {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.5fr 1fr;
+      grid-template-columns: 1fr;
       gap: 20px;
     }
     @media (max-width: 1100px) {
-      .grid { grid-template-columns: 1fr 1fr; }
+      .grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
@@ -563,101 +564,104 @@
       color: #6c757d;
       margin-top: 2px;
     }
-
-    /* RIGHT PANE */
-    .ongoing-section-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #6c757d;
-      margin: 14px 0 8px;
-      padding-top: 10px;
-      border-top: 1px solid #2d3340;
-      font-weight: 600;
+    .week-item-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      align-items: center;
     }
-    .ongoing-section-label:first-child {
-      margin-top: 0;
-      padding-top: 0;
-      border-top: none;
+    .week-action-btn {
+      background: #2d3340;
+      border: 1px solid #3a4150;
+      color: #c9ccd1;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.15s ease;
     }
-    .ongoing-status-group {
-      margin-bottom: 12px;
+    .week-action-btn:hover {
+      background: #3a4150;
+      border-color: #4dabf7;
+      transform: scale(1.05);
     }
-    .ongoing-status-name {
+    .week-action-btn.done:hover { border-color: #51cf66; color: #51cf66; }
+    .week-action-btn.remark:hover { border-color: #ffd700; color: #ffd700; }
+    .week-action-btn.snooze:hover { border-color: #4dabf7; color: #4dabf7; }
+    .week-action-btn.busy {
+      opacity: 0.5;
+      cursor: wait;
+    }
+    .week-action-btn.done {
+      background: #1f3a25;
+    }
+    .week-item-row {
+      display: inline;
+    }
+    .week-action-form {
+      grid-column: 1 / -1;
+      background: #232830;
+      border: 1px solid #3a4150;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+    .week-action-form input[type="date"],
+    .week-action-form input[type="text"],
+    .week-action-form textarea {
+      background: #1a1f29;
+      border: 1px solid #3a4150;
+      color: #e8eaed;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      width: 100%;
+      margin: 4px 0;
+      font-family: inherit;
+    }
+    .week-action-form button {
+      background: #4dabf7;
+      color: #0f1419;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
-      color: #4dabf7;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-right: 6px;
     }
-    .ongoing-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 6px 10px;
-      background: #0f1419;
-      border-radius: 6px;
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-    .ongoing-name {
-      color: #e8eaed;
-      flex: 1;
-      min-width: 0;
-      word-wrap: break-word;
-    }
-    .ongoing-decision { color: #ff6b6b; margin-right: 4px; }
-    .ongoing-meta {
-      flex-shrink: 0;
-      margin-left: 8px;
-    }
-    .ongoing-due {
-      font-size: 10px;
+    .week-action-form button.cancel {
+      background: #2d3340;
       color: #9aa0a6;
-      font-weight: 600;
     }
-    .ongoing-due.today { color: #ff6b6b; }
-    .ongoing-due.past { color: #6c757d; }
-
-    /* FOOTER */
-    .far-section {
-      max-width: 1400px;
-      margin: 20px auto 0;
-      background: #1a1f29;
-      border-radius: 12px;
-      padding: 12px 18px;
-      border: 1px solid #2d3340;
+    .week-action-form button:hover {
+      filter: brightness(1.1);
     }
-    .far-section-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #6c757d;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .far-item {
-      display: flex;
-      gap: 12px;
-      padding: 3px 0;
+    .week-action-form label {
+      color: #9aa0a6;
       font-size: 11px;
-      color: #9aa0a6;
+      display: block;
+      margin-top: 6px;
     }
-    .far-date {
-      flex-shrink: 0;
-      width: 130px;
-      color: #6c757d;
+    .week-action-status {
+      grid-column: 1 / -1;
+      font-size: 11px;
+      color: #51cf66;
+      padding: 4px 0;
     }
-    .far-rel {
-      flex-shrink: 0;
-      width: 40px;
-      color: #6c757d;
-      text-align: right;
+    .week-action-status.error {
+      color: #ff6b6b;
     }
-    .far-label {
-      color: #c9ccd1;
-    }
+
+    /* NOTE: .ongoing-* and .far-* CSS rules were removed on 2026-10-05
+       when the right-pane and beyond-14-days sections were dropped.
+       The data still gets fetched for other tools. */
 
     .empty {
       color: #6c757d;
@@ -680,60 +684,54 @@
   <header>
     <h1>⏰ SOON YIK OS — Weekly Dashboard</h1>
     <div class="meta">
-      <strong>Sunday, 04 October 2026</strong> ·
-      <span>this week: 15 · ongoing: 34</span>
+      <strong>Monday, 05 October 2026</strong> ·
+      <span>this week: 16</span>
     </div>
   </header>
 
   
 
   <div class="grid">
-    <!-- LEFT: ACTION QUEUE (this week + next 7 days, date-grouped) -->
+    <!-- LEFT: ACTION QUEUE (this week + next 14 days, date-grouped) -->
     <div class="pane middle">
-      <h2>📋 Action queue <span class="count-pill">15</span></h2>
+      <h2>📋 Action queue <span class="count-pill">16</span></h2>
       
             <div class="week-day">
               <div class="week-day-header">
                 <div class="week-day-date">Mon 05 Oct 2026</div>
-                <div class="week-day-rel">tomorrow</div>
+                <div class="week-day-rel">TODAY</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item critical">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))</div>        <div class="week-item-source">Project Action</div>  </div></div><div class="week-item critical">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Masavan call-off decision</div>    <div class="week-item-parent">Masavan Acquisition — WD 1st Industrial Project</div>    <div class="week-item-source">Project Action</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Legal Action Toward Client</div>    <div class="week-item-parent">ACH / Costing dispute</div>    <div class="week-item-source">Opportunity (Validating)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">ACH Costing Analysis + Up-to-Date Costing Review</div>        <div class="week-item-source">Opportunity (Planning)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Cash-Flow Restructure</div>        <div class="week-item-source">Opportunity (Validating)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature</div>        <div class="week-item-source">Opportunity (Urgent)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Transport Department — Let-Go Decision</div>        <div class="week-item-source">Opportunity (Planning)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WDHB Renovation — Approve RM159k Re-quote</div>    <div class="week-item-parent">Suzanne Neoh</div>    <div class="week-item-source">Opportunity (Validating)</div>  </div></div>
+                <div class="week-item high" data-recid="recTo3yOO6EWljx9D" data-table="Project Actions" data-label="Follow up Weisheng on JieLong programme fee confirmation (BE120 3.0 — Cohort (Tiamo 6-month programme))">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up Weisheng on JieLong programme fee confirmation (BE120 3.0 — Cohort (Tiamo 6-month programme))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTo3yOO6EWljx9D" data-table="Project Actions" data-label="Follow up Weisheng on JieLong programme fee confirmation (BE120 3.0 — Cohort (Tiamo 6-month programme))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTo3yOO6EWljx9D" data-table="Project Actions" data-label="Follow up Weisheng on JieLong programme fee confirmation (BE120 3.0 — Cohort (Tiamo 6-month programme))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTo3yOO6EWljx9D" data-table="Project Actions" data-label="Follow up Weisheng on JieLong programme fee confirmation (BE120 3.0 — Cohort (Tiamo 6-month programme))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item critical" data-recid="recYpcHWoXqyYCv39" data-table="Project Actions" data-label="LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recYpcHWoXqyYCv39" data-table="Project Actions" data-label="LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recYpcHWoXqyYCv39" data-table="Project Actions" data-label="LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recYpcHWoXqyYCv39" data-table="Project Actions" data-label="LSS6 P1 vs CRESS pivot decision framework (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item critical" data-recid="recgpO5xvwDYeMUZ2" data-table="Project Actions" data-label="Masavan call-off decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Masavan call-off decision</div>    <div class="week-item-parent">Masavan Acquisition — WD 1st Industrial Project</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recgpO5xvwDYeMUZ2" data-table="Project Actions" data-label="Masavan call-off decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recgpO5xvwDYeMUZ2" data-table="Project Actions" data-label="Masavan call-off decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recgpO5xvwDYeMUZ2" data-table="Project Actions" data-label="Masavan call-off decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recGLKgtQ2K2IqSOq" data-table="Opportunities" data-label="WD Legal Action Toward Client">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Legal Action Toward Client</div>    <div class="week-item-parent">ACH / Costing dispute</div>    <div class="week-item-source">Opportunity (Validating)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recGLKgtQ2K2IqSOq" data-table="Opportunities" data-label="WD Legal Action Toward Client" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recGLKgtQ2K2IqSOq" data-table="Opportunities" data-label="WD Legal Action Toward Client" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recGLKgtQ2K2IqSOq" data-table="Opportunities" data-label="WD Legal Action Toward Client" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recTDhV6vnzz5eGe6" data-table="Opportunities" data-label="ACH Costing Analysis + Up-to-Date Costing Review">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">ACH Costing Analysis + Up-to-Date Costing Review</div>        <div class="week-item-source">Opportunity (Planning)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTDhV6vnzz5eGe6" data-table="Opportunities" data-label="ACH Costing Analysis + Up-to-Date Costing Review" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTDhV6vnzz5eGe6" data-table="Opportunities" data-label="ACH Costing Analysis + Up-to-Date Costing Review" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTDhV6vnzz5eGe6" data-table="Opportunities" data-label="ACH Costing Analysis + Up-to-Date Costing Review" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Cash-Flow Restructure</div>        <div class="week-item-source">Opportunity (Validating)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recTicY7HLahLdKLn" data-table="Opportunities" data-label="Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature</div>        <div class="week-item-source">Opportunity (Urgent)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTicY7HLahLdKLn" data-table="Opportunities" data-label="Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTicY7HLahLdKLn" data-table="Opportunities" data-label="Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTicY7HLahLdKLn" data-table="Opportunities" data-label="Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="rect4L04iQYhYkdJ5" data-table="Opportunities" data-label="WD Transport Department — Let-Go Decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Transport Department — Let-Go Decision</div>        <div class="week-item-source">Opportunity (Planning)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="rect4L04iQYhYkdJ5" data-table="Opportunities" data-label="WD Transport Department — Let-Go Decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="rect4L04iQYhYkdJ5" data-table="Opportunities" data-label="WD Transport Department — Let-Go Decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="rect4L04iQYhYkdJ5" data-table="Opportunities" data-label="WD Transport Department — Let-Go Decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recytMBsMwdmi01LV" data-table="Opportunities" data-label="WDHB Renovation — Approve RM159k Re-quote">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WDHB Renovation — Approve RM159k Re-quote</div>    <div class="week-item-parent">Suzanne Neoh</div>    <div class="week-item-source">Opportunity (Validating)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recytMBsMwdmi01LV" data-table="Opportunities" data-label="WDHB Renovation — Approve RM159k Re-quote" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recytMBsMwdmi01LV" data-table="Opportunities" data-label="WDHB Renovation — Approve RM159k Re-quote" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recytMBsMwdmi01LV" data-table="Opportunities" data-label="WDHB Renovation — Approve RM159k Re-quote" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
             <div class="week-day">
               <div class="week-day-header">
                 <div class="week-day-date">Tue 06 Oct 2026</div>
-                <div class="week-day-rel">+2d</div>
+                <div class="week-day-rel">tomorrow</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item high">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))</div>        <div class="week-item-source">Project Action</div>  </div></div><div class="week-item high">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Masavan escalation if no decision</div>    <div class="week-item-parent">Masavan Acquisition — WD 1st Industrial Project</div>    <div class="week-item-source">Project Action</div>  </div></div><div class="week-item">  <div class="week-item-kind">📆</div>  <div class="week-item-body">    <div class="week-item-verb">Nano Aquatec — Malaysian sole distributorship</div>    <div class="week-item-parent">palm oil CPO extraction</div>    <div class="week-item-source">Opportunity (Exploring)</div>  </div></div>
+                <div class="week-item high" data-recid="recILyepuHHT8yw0U" data-table="Project Actions" data-label="Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recILyepuHHT8yw0U" data-table="Project Actions" data-label="Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recILyepuHHT8yw0U" data-table="Project Actions" data-label="Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recILyepuHHT8yw0U" data-table="Project Actions" data-label="Show LSS6 model to Nahar (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item high" data-recid="recku2mq8lZlKDkiu" data-table="Project Actions" data-label="Masavan escalation if no decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Masavan escalation if no decision</div>    <div class="week-item-parent">Masavan Acquisition — WD 1st Industrial Project</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recku2mq8lZlKDkiu" data-table="Project Actions" data-label="Masavan escalation if no decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recku2mq8lZlKDkiu" data-table="Project Actions" data-label="Masavan escalation if no decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recku2mq8lZlKDkiu" data-table="Project Actions" data-label="Masavan escalation if no decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="reciEag6YTRkJbWTV" data-table="Opportunities" data-label="Nano Aquatec — Malaysian sole distributorship">  <div class="week-item-kind">📆</div>  <div class="week-item-body">    <div class="week-item-verb">Nano Aquatec — Malaysian sole distributorship</div>    <div class="week-item-parent">palm oil CPO extraction</div>    <div class="week-item-source">Opportunity (Exploring)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="reciEag6YTRkJbWTV" data-table="Opportunities" data-label="Nano Aquatec — Malaysian sole distributorship" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="reciEag6YTRkJbWTV" data-table="Opportunities" data-label="Nano Aquatec — Malaysian sole distributorship" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="reciEag6YTRkJbWTV" data-table="Opportunities" data-label="Nano Aquatec — Malaysian sole distributorship" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
             <div class="week-day">
               <div class="week-day-header">
                 <div class="week-day-date">Wed 07 Oct 2026</div>
-                <div class="week-day-rel">+3d</div>
+                <div class="week-day-rel">+2d</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Sell energy portfolio to WeiDun — Strategic decision</div>        <div class="week-item-source">Opportunity (Urgent)</div>  </div></div>
+                <div class="week-item" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Sell energy portfolio to WeiDun — Strategic decision</div>        <div class="week-item-source">Opportunity (Urgent)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
             <div class="week-day">
               <div class="week-day-header">
                 <div class="week-day-date">Fri 09 Oct 2026</div>
-                <div class="week-day-rel">+5d</div>
+                <div class="week-day-rel">+4d</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item critical">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))</div>        <div class="week-item-source">Project Action</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">BlackHawk Fund Return</div>    <div class="week-item-parent">Closed deal — get money back by 9/10</div>    <div class="week-item-source">Opportunity (Closed)</div>  </div></div><div class="week-item">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">China EPCC Consortium Outreach — KahSheng Visit Tour</div>        <div class="week-item-source">Opportunity (Exploring)</div>  </div></div>
+                <div class="week-item critical" data-recid="recQ1oNAxg4eflX1Y" data-table="Project Actions" data-label="ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recQ1oNAxg4eflX1Y" data-table="Project Actions" data-label="ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recQ1oNAxg4eflX1Y" data-table="Project Actions" data-label="ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recQ1oNAxg4eflX1Y" data-table="Project Actions" data-label="ProX: execute security services contract (Option 1 — 6% royalty via WDTF) (ProX Security Operations (Option 1 — 6% royalty via WDTF))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recLQdAVWMnxfT1WW" data-table="Opportunities" data-label="BlackHawk Fund Return">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">BlackHawk Fund Return</div>    <div class="week-item-parent">Closed deal — get money back by 9/10</div>    <div class="week-item-source">Opportunity (Closed)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recLQdAVWMnxfT1WW" data-table="Opportunities" data-label="BlackHawk Fund Return" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recLQdAVWMnxfT1WW" data-table="Opportunities" data-label="BlackHawk Fund Return" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recLQdAVWMnxfT1WW" data-table="Opportunities" data-label="BlackHawk Fund Return" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recwFS24YiA8ptsrB" data-table="Opportunities" data-label="China EPCC Consortium Outreach — KahSheng Visit Tour">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">China EPCC Consortium Outreach — KahSheng Visit Tour</div>        <div class="week-item-source">Opportunity (Exploring)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recwFS24YiA8ptsrB" data-table="Opportunities" data-label="China EPCC Consortium Outreach — KahSheng Visit Tour" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recwFS24YiA8ptsrB" data-table="Opportunities" data-label="China EPCC Consortium Outreach — KahSheng Visit Tour" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recwFS24YiA8ptsrB" data-table="Opportunities" data-label="China EPCC Consortium Outreach — KahSheng Visit Tour" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
-    </div>
-
-    <!-- RIGHT: ONGOING -->
-    <div class="pane right">
-      <h2>🔄 Ongoing <span class="count-pill">34</span></h2>
-      <div class="ongoing-section-label">Projects by status</div><div class="ongoing-status-group">  <div class="ongoing-status-name">Active <span class="count-pill">7</span></div>  <div class="ongoing-row">  <div class="ongoing-name">ProX Security Operations (Option 1 — 6% royalty via WDTF)</div>  <div class="ongoing-meta"><span class="ongoing-due">+5d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">WD Purchasing Centralisation (PO approval through Ms Sue)</div>  <div class="ongoing-meta"><span class="ongoing-due">+12d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Purchasing Guarantor (PG) Removal — 35 PGs</div>  <div class="ongoing-meta"><span class="ongoing-due">+12d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</div>  <div class="ongoing-meta"><span class="ongoing-due">+27d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</div>  <div class="ongoing-meta"><span class="ongoing-due">+27d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">SoonYik OS Build + WD Operating System Restructure</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">WD Meeting Format — Update / Issue / Discussion / Summary</div>  <div class="ongoing-meta"></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">On Hold <span class="count-pill">1</span></div>  <div class="ongoing-row">  <div class="ongoing-name"><span class="ongoing-decision">⚑</span>Masavan Acquisition — WD 1st Industrial Project</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">Planning <span class="count-pill">7</span></div>  <div class="ongoing-row">  <div class="ongoing-name"><span class="ongoing-decision">⚑</span>LSS6 / CRESS Submission Strategy (Samaiden + Soonyik)</div>  <div class="ongoing-meta"><span class="ongoing-due">+2d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Bamboo Plantation (KunMing) — Biomass feedstock for 30MW</div>  <div class="ongoing-meta"><span class="ongoing-due">+16d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Family Plantation Expansion</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Perak / Kedah / Kelantan Solar Land Pipeline (2,445 acres)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Terengganu Free Trade Zone (proposed)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Suzanne (SN Creative) — Soonyik 30% Investment</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Tiamo Malaysia Sole Distributorship (BE120)</div>  <div class="ongoing-meta"></div></div></div><div class="ongoing-section-label">Open opportunities</div><div class="ongoing-status-group">  <div class="ongoing-status-name">Urgent <span class="count-pill">2</span></div>  <div class="ongoing-row">  <div class="ongoing-name">Solar Project Drawdown — Force Lim Kok Seong Guarantor Signature</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Sell energy portfolio to WeiDun — Strategic decision</div>  <div class="ongoing-meta"><span class="ongoing-due">+3d</span></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">Planning <span class="count-pill">3</span></div>  <div class="ongoing-row">  <div class="ongoing-name">ACH Costing Analysis + Up-to-Date Costing Review</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">WD Transport Department — Let-Go Decision</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Blueprint Orientation Refresh (2026 H2)</div>  <div class="ongoing-meta"></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">Validating <span class="count-pill">5</span></div>  <div class="ongoing-row">  <div class="ongoing-name">WD Legal Action Toward Client (ACH / Costing dispute)</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">WD Cash-Flow Restructure</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">WDHB Renovation — Approve RM159k Re-quote (Suzanne Neoh)</div>  <div class="ongoing-meta"><span class="ongoing-due">+1d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Tiamo Malaysia Sole Distributorship (BE120 vehicle)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Plantation Director hire (family expansion)</div>  <div class="ongoing-meta"></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">Exploring <span class="count-pill">8</span></div>  <div class="ongoing-row">  <div class="ongoing-name">Nano Aquatec — Malaysian sole distributorship (palm oil CPO extraction)</div>  <div class="ongoing-meta"><span class="ongoing-due">+2d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">China EPCC Consortium Outreach — KahSheng Visit Tour</div>  <div class="ongoing-meta"><span class="ongoing-due">+5d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">WD Operating System — Department-by-Department SOP + Automation</div>  <div class="ongoing-meta"><span class="ongoing-due">+27d</span></div></div><div class="ongoing-row">  <div class="ongoing-name">Sabah Hydro + Sarawak Solar Divestment (3% over capex)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">EPCC routing via Samaiden (Dato Wira Anis)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">1,000-acre land access (Terengganu FTZ)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Sabah 120MW Hydro Power (Dato Sohaimi SPV structure)</div>  <div class="ongoing-meta"></div></div><div class="ongoing-row">  <div class="ongoing-name">Uzbekistan business exploration (Dato Sohaimi network)</div>  <div class="ongoing-meta"></div></div></div><div class="ongoing-status-group">  <div class="ongoing-status-name">Learning <span class="count-pill">1</span></div>  <div class="ongoing-row">  <div class="ongoing-name">LSS5+ Lessons Learned — Jaks × CPEEC (ChinaPower subsidiary) Model</div>  <div class="ongoing-meta"><span class="ongoing-due">+88d</span></div></div></div>
     </div>
   </div>
 
@@ -756,9 +754,43 @@
             <div class="dr-card">
               <div class="dr-card-header">
                 <div class="dr-date">
+                  <span class="dr-day">Sunday</span>
+                  <span class="dr-date-label">04 Oct 2026</span>
+                  <span class="dr-rel">yesterday</span>
+                </div>
+                
+              </div>
+              <div class="dr-title">2026-10-04 (Sun) — Daily Log</div>
+              
+            <div class="dr-field">
+              <div class="dr-field-label">📝 Today</div>
+              <div class="dr-field-content">&gt; Two threads: [[Loh Ning]] (full-day session 12pm-10pm) + [[CB Lim]] (shooting club). The Loh Ning session surfaced the **Aranya** entity (now identified as the Blueprint study-tour P&amp;L).</div>
+            </div>
+              
+              
+            <div class="dr-field">
+              <div class="dr-field-label">🧭 A step toward</div>
+              <div class="dr-field-content">
+                <span class="axis-tag">💰 100mil (Capital)</span>
+              </div>
+            </div>
+              
+            <div class="dr-field">
+              <div class="dr-field-label">✨ Benefits gained</div>
+              <div class="dr-field-content"><ul class="dr-list"><li>RM2000 involved</li><li>~RM2000 remaining profit</li><li>Drop low-price-affordable framing</li><li>Outsider price = market price</li></ul></div>
+            </div>
+              
+            <div class="dr-field dr-reflection">
+              <div class="dr-field-label">📖 Reflection</div>
+              <div class="dr-field-content dr-quote">"Two threads: [[Loh Ning]] (full-day session 12pm-10pm) + [[CB Lim]] (shooting club). The Loh Ning session surfaced the **Aranya** entity (now identified as the Blueprint study-tour P&amp;L)."</div>
+            </div>
+            </div>
+            <div class="dr-card">
+              <div class="dr-card-header">
+                <div class="dr-date">
                   <span class="dr-day">Saturday</span>
                   <span class="dr-date-label">03 Oct 2026</span>
-                  <span class="dr-rel">yesterday</span>
+                  <span class="dr-rel">2d ago</span>
                 </div>
                 
             <div class="dr-rating">
@@ -796,17 +828,21 @@
                 <div class="dr-date">
                   <span class="dr-day">Friday</span>
                   <span class="dr-date-label">02 Oct 2026</span>
-                  <span class="dr-rel">2d ago</span>
+                  <span class="dr-rel">3d ago</span>
                 </div>
                 
               </div>
-              <div class="dr-title">2026-10-02 (Fri) — Daily Update (5 sections)</div>
+              <div class="dr-title">2026-10-02 (Fri) — Daily Update</div>
               
             <div class="dr-field">
               <div class="dr-field-label">📝 Today</div>
-              <div class="dr-field-content">This was the **physical WD shareholder meeting day**. Heavy on decisions.</div>
+              <div class="dr-field-content">The physical WD shareholder meeting day. Heavy on decisions.</div>
             </div>
               
+            <div class="dr-field">
+              <div class="dr-field-label">💭 You felt</div>
+              <div class="dr-field-content">我应该要花时间了解并设立好soonyik 管理流程。不应该不了解的运营公司，也不应该把重要的一些决定和工作假手于人。</div>
+            </div>
               
             <div class="dr-field">
               <div class="dr-field-label">🧭 A step toward</div>
@@ -817,20 +853,16 @@
               
             <div class="dr-field">
               <div class="dr-field-label">✨ Benefits gained</div>
-              <div class="dr-field-content"><ul class="dr-list"><li>RM13 involved</li><li>RM2 involved</li><li>Total Capex: 2.5M × RM13 = RM32.5M (~RM10.9M/year)</li><li>Total Opex: 2.5M × RM1.5 = RM3.75M/year</li></ul></div>
+              <div class="dr-field-content"><ul class="dr-list"><li>RM2 involved</li><li>RM8 involved</li><li>Wait / Follow up later</li><li>Mon 5/10/2026:</li></ul></div>
             </div>
               
-            <div class="dr-field dr-reflection">
-              <div class="dr-field-label">📖 Reflection</div>
-              <div class="dr-field-content dr-quote">"It&#39;s a wake-up meeting with the shareholders. Their question hit me and I did question myself whether I&#39;m the right person to handle the company by my own. A good leader must understand deeply on how the company is running and current situation. Besides, need to have solution and answer for the shar"</div>
-            </div>
             </div>
             <div class="dr-card">
               <div class="dr-card-header">
                 <div class="dr-date">
                   <span class="dr-day">Thursday</span>
                   <span class="dr-date-label">01 Oct 2026</span>
-                  <span class="dr-rel">3d ago</span>
+                  <span class="dr-rel">4d ago</span>
                 </div>
                 
               </div>
@@ -864,7 +896,7 @@
                 <div class="dr-date">
                   <span class="dr-day">Wednesday</span>
                   <span class="dr-date-label">30 Sep 2026</span>
-                  <span class="dr-rel">4d ago</span>
+                  <span class="dr-rel">5d ago</span>
                 </div>
                 
               </div>
@@ -908,7 +940,7 @@
                 <div class="dr-date">
                   <span class="dr-day">Tuesday</span>
                   <span class="dr-date-label">29 Sep 2026</span>
-                  <span class="dr-rel">5d ago</span>
+                  <span class="dr-rel">6d ago</span>
                 </div>
                 
               </div>
@@ -938,43 +970,6 @@
             <div class="dr-field dr-reflection">
               <div class="dr-field-label">📖 Reflection</div>
               <div class="dr-field-content dr-quote">"i find out as a leader/business owner, i need to train and give clear instruction to my subordinate/partner on what they should do in order to reach what i want and see through my telescope. I got this diamond (take away) while i train my kids through a simple training programme, me as a coach/train"</div>
-            </div>
-            </div>
-            <div class="dr-card">
-              <div class="dr-card-header">
-                <div class="dr-date">
-                  <span class="dr-day">Monday</span>
-                  <span class="dr-date-label">28 Sep 2026</span>
-                  <span class="dr-rel">6d ago</span>
-                </div>
-                
-              </div>
-              <div class="dr-title">2026-09-28 (Mon) — Day Notes</div>
-              
-            <div class="dr-field">
-              <div class="dr-field-label">📝 Today</div>
-              <div class="dr-field-content">**Soon Yik&#39;s proposal to them:**
-1. We are the Malaysian sole distributor for the technology
-2. If zero-capex model, request special pricing / support for faster recovery given tech not yet proven at scale
-3. Lock the current company valuation now, fix for 36 months — option to buy out the company s</div>
-            </div>
-              
-              
-            <div class="dr-field">
-              <div class="dr-field-label">🧭 A step toward</div>
-              <div class="dr-field-content">
-                <span class="axis-tag">💰 100mil (Capital)</span>
-              </div>
-            </div>
-              
-            <div class="dr-field">
-              <div class="dr-field-label">✨ Benefits gained</div>
-              <div class="dr-field-content"><ul class="dr-list"><li>RM3 involved</li><li>RM450 involved</li><li>Decision: Look for bank advice whether OK to fund → Singapore contact (</li><li>Decision framework (verbatim):</li></ul></div>
-            </div>
-              
-            <div class="dr-field dr-reflection">
-              <div class="dr-field-label">📖 Reflection</div>
-              <div class="dr-field-content dr-quote">"i&#39;m having a fruitful day with lot of resources equipped. i will continue in what i focus now Renewable energy investment as owner (Build positive impact) and Obtain Construction Project (Lowest Hanging Fruit). My biggest take away is to build a Good IP (Attract Follower), Good Product/Services (Ret"</div>
             </div>
             </div>
       </div>
@@ -1032,14 +1027,171 @@
     })();
   </script>
 
-  
-        <div class="far-section">
-          <div class="far-section-label">Beyond 14 days · 9 items</div>
-          <div class="far-item">  <span class="far-date">Fri 16 Oct 2026</span>  <span class="far-rel">+12d</span>  <span class="far-label">🚨 All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))</span></div><div class="far-item">  <span class="far-date">Fri 16 Oct 2026</span>  <span class="far-rel">+12d</span>  <span class="far-label">🚨 35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)</span></div><div class="far-item">  <span class="far-date">Fri 16 Oct 2026</span>  <span class="far-rel">+12d</span>  <span class="far-label">🚨 Targeted PG removal list (PG Removal project) (Purchasing Guarantor (PG) Removal — 35 PGs)</span></div><div class="far-item">  <span class="far-date">Tue 20 Oct 2026</span>  <span class="far-rel">+16d</span>  <span class="far-label">🚨 Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)</span></div><div class="far-item">  <span class="far-date">Sat 31 Oct 2026</span>  <span class="far-rel">+27d</span>  <span class="far-label">🚨 BE120 3.0 cohort launch (Tiamo 6-month programme) (BE120 3.0 — Cohort (Tiamo 6-month programme))</span></div><div class="far-item">  <span class="far-date">Sat 31 Oct 2026</span>  <span class="far-rel">+27d</span>  <span class="far-label">🚨 Twin Hi Tech October milestone (RM2.7M disbursed) (Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027))</span></div><div class="far-item">  <span class="far-date">Sat 31 Oct 2026</span>  <span class="far-rel">+27d</span>  <span class="far-label">🚨 WD Operating System — Department-by-Department SOP + Automation</span></div><div class="far-item">  <span class="far-date">Wed 30 Dec 2026</span>  <span class="far-rel">+87d</span>  <span class="far-label">🚨 LSS6 final submission (LSS6 / CRESS Submission Strategy (Samaiden + Soonyik))</span></div><div class="far-item">  <span class="far-date">Thu 31 Dec 2026</span>  <span class="far-rel">+88d</span>  <span class="far-label">🚨 LSS5+ Lessons Learned — Jaks × CPEEC (ChinaPower subsidiary) Model</span></div>
-        </div>
+  <script>
+    // ====================================================================
+    // DASHBOARD ACTION HANDLER (added 2026-10-05)
+    // ====================================================================
+    // Buttons on each action row (✓ done, 📝 remark, ⏰ snooze) POST to
+    // the Vercel proxy (api/dashboard-action) which:
+    //   1. PATCHes Airtable (the source of truth for the action queue)
+    //   2. Sends a Telegram message to the soonyik_bot so the daily-update
+    //      capture later writes a per-project vault log entry.
+    // Endpoint is configured at build time via a <meta> tag injected by
+    // build_dashboard.py. If unset, falls back to the page's own origin
+    // (Vercel auto-routes /api/* to the function).
+    (function() {
+      const endpoint = (document.querySelector('meta[name="dashboard-action-endpoint"]') || {}).content
+        || (window.location.origin + '/api/dashboard-action');
+
+      // Build the form for each action type
+      function buildForm(action, recid, table, label) {
+        const form = document.createElement('div');
+        form.className = 'week-action-form';
+
+        if (action === 'done') {
+          form.innerHTML = `
+            <div>Mark <strong>${escapeHtml(label)}</strong> as done?</div>
+            <button data-submit="done">✓ Yes, mark done</button>
+            <button class="cancel" data-cancel>Cancel</button>
+          `;
+        } else if (action === 'remark') {
+          form.innerHTML = `
+            <label>Add a remark to <strong>${escapeHtml(label)}</strong>:</label>
+            <textarea rows="3" placeholder="e.g. Spoke to Mr Tee — agreed to push to next Wed"></textarea>
+            <button data-submit="remark">Save remark</button>
+            <button class="cancel" data-cancel>Cancel</button>
+          `;
+        } else if (action === 'snooze') {
+          const today = new Date().toISOString().split('T')[0];
+          form.innerHTML = `
+            <label>Snooze <strong>${escapeHtml(label)}</strong> to a new date:</label>
+            <input type="date" value="${today}" />
+            <input type="text" placeholder="Why snoozing? (optional, recorded in Notes)" />
+            <button data-submit="snooze">Snooze</button>
+            <button class="cancel" data-cancel>Cancel</button>
+          `;
+        }
+
+        return form;
+      }
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[c]);
+      }
+
+      function setBusy(row, busy) {
+        row.querySelectorAll('.week-action-btn').forEach(b => {
+          b.classList.toggle('busy', busy);
+          b.disabled = busy;
+        });
+      }
+
+      function showStatus(row, msg, isError) {
+        let s = row.querySelector('.week-action-status');
+        if (!s) {
+          s = document.createElement('div');
+          s.className = 'week-action-status';
+          row.appendChild(s);
+        }
+        s.textContent = msg;
+        s.classList.toggle('error', !!isError);
+        if (!isError) {
+          setTimeout(() => s.remove(), 4000);
+        }
+      }
+
+      async function post(payload) {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const txt = await res.text().catch(() => '');
+          throw new Error(`HTTP ${res.status}: ${txt.slice(0, 200)}`);
+        }
+        return res.json();
+      }
+
+      // Event delegation: one listener for the whole document
+      document.addEventListener('click', async (e) => {
+        // Cancel button on a form
+        const cancelBtn = e.target.closest('[data-cancel]');
+        if (cancelBtn) {
+          const form = cancelBtn.closest('.week-action-form');
+          if (form) form.remove();
+          e.stopPropagation();
+          return;
+        }
+
+        // Submit button on a form
+        const submitBtn = e.target.closest('[data-submit]');
+        if (submitBtn) {
+          const action = submitBtn.dataset.submit;
+          const form = submitBtn.closest('.week-action-form');
+          const row = form.closest('.week-item');
+          if (!row) return;
+          const recid = row.dataset.recid;
+          const table = row.dataset.table;
+          const label = row.dataset.label;
+
+          let payload = { action, recid, table, label };
+          if (action === 'remark') {
+            const text = form.querySelector('textarea').value.trim();
+            if (!text) { showStatus(row, 'Remark cannot be empty.', true); return; }
+            payload.text = text;
+          } else if (action === 'snooze') {
+            const inputs = form.querySelectorAll('input');
+            const newDate = inputs[0].value;
+            const reason = inputs[1].value.trim();
+            if (!newDate) { showStatus(row, 'Pick a date.', true); return; }
+            payload.newDate = newDate;
+            payload.reason = reason;
+          }
+
+          setBusy(row, true);
+          try {
+            const result = await post(payload);
+            showStatus(row, '✓ Saved. Vault log will be appended on next daily update.');
+            form.remove();
+            // Mark visually as done / pending
+            if (action === 'done') {
+              row.style.opacity = '0.4';
+              row.style.textDecoration = 'line-through';
+            }
+          } catch (err) {
+            showStatus(row, '✗ ' + (err.message || 'Network error'), true);
+            setBusy(row, false);
+          }
+          e.stopPropagation();
+          return;
+        }
+
+        // Action button (✓ / 📝 / ⏰) on a row
+        const actionBtn = e.target.closest('.week-action-btn');
+        if (actionBtn) {
+          const row = actionBtn.closest('.week-item');
+          if (!row) return;
+          // Remove any other open form in this row
+          row.querySelectorAll('.week-action-form').forEach(f => f.remove());
+          const action = actionBtn.dataset.action;
+          const form = buildForm(action, row.dataset.recid, row.dataset.table, row.dataset.label);
+          row.appendChild(form);
+          // Focus the first input
+          setTimeout(() => {
+            const firstInput = form.querySelector('input, textarea');
+            if (firstInput) firstInput.focus();
+          }, 0);
+          e.stopPropagation();
+        }
+      });
+    })();
+  </script>
 
   <footer>
     Source: Airtable base SOON YIK OS (appXP8uHbozypGwMw) + vault 01_Daily/ · Auto-generated by <code>build_dashboard.py</code>
   </footer>
-<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-04 19:58 MYT</div></body>
+<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-05 10:22 MYT</div></body>
 </html>
