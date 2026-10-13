@@ -13,4 +13,4 @@ It does NOT show: People names, Company names, internal Notes fields, or anythin
 
 The dashboard auto-regenerates daily via the SOON YIK OS morning reminder cron.
 
-**Live URL:** _(configured via GitHub Pages — see soon-yik-os-public repo settings)_
+**Live URL:** https://clarissaaibot-tech.github.io/soon-yik-os-public/
