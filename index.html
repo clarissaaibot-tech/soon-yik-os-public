@@ -6,6 +6,83 @@
   <meta name="dashboard-action-endpoint" content="https://soon-yik-os-actions.vercel.app/api/dashboard-action">
   <title>SOON YIK OS — Weekly Dashboard</title>
   <style>
+    /* PASSWORD GATE (2026-10-13) — hides dashboard until user enters the
+       correct access code. The cleartext code does NOT live in this
+       source — only its SHA-256 hash. localStorage remembers the unlock
+       for 12 hours so the gate doesn't re-prompt on every refresh.
+       Honest limit: client-side obfuscation. A determined attacker can
+       read the hash and brute-force it offline. For real security,
+       put the dashboard behind Cloudflare Access or similar. */
+    body.gate-locked .gate-only { display: none; }
+    .pw-gate {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0a0e14;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+    body.gate-locked .pw-gate { display: flex; }
+    body.gate-unlocked .pw-gate { display: none; }
+    .pw-gate-card {
+      background: #1a1f29;
+      border: 1px solid #2d3340;
+      border-radius: 12px;
+      padding: 32px 36px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .pw-gate-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 8px;
+    }
+    .pw-gate-subtitle {
+      color: #9aa0a6;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+    .pw-gate-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 16px;
+      background: #0f1419;
+      border: 1px solid #2d3340;
+      border-radius: 6px;
+      color: #e8eaed;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+    .pw-gate-input:focus {
+      outline: none;
+      border-color: #ffd700;
+    }
+    .pw-gate-submit {
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px 14px;
+      background: #ffd700;
+      color: #0a0e14;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .pw-gate-submit:hover { background: #ffea7a; }
+    .pw-gate-error {
+      margin-top: 12px;
+      color: #ff6b6b;
+      font-size: 12px;
+      display: none;
+    }
+    .pw-gate-error.show { display: block; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -832,8 +909,19 @@
     }
   </style>
 </head>
-<body>
-  <header>
+<body class="gate-locked">
+  <div class="pw-gate" id="pw-gate">
+    <div class="pw-gate-card">
+      <div class="pw-gate-title">🔒 SOON YIK OS Dashboard</div>
+      <div class="pw-gate-subtitle">Enter the access code to view the dashboard.</div>
+      <input type="password" id="pw-input" class="pw-gate-input" autocomplete="off"
+             inputmode="numeric" pattern="[0-9]*" maxlength="20"
+             placeholder="• • • •" aria-label="access code" />
+      <button id="pw-submit" class="pw-gate-submit">Unlock</button>
+      <div id="pw-error" class="pw-gate-error">Wrong code. Try again.</div>
+    </div>
+  </div>
+  <header class="gate-only">
     <h1>⏰ SOON YIK OS — Weekly Dashboard</h1>
     <div class="meta">
       <strong>Tuesday, 13 October 2026</strong> ·
@@ -900,7 +988,7 @@
     <div class="pane active-projects-pane">
       <h2>📁 ACTIVE PROJECTS <span class="count-pill">12</span></h2>
       <div class="active-proj-grid">
-        <div class="active-proj-axis" style="border-left: 3px solid #ffd700;">  <div class="active-proj-axis-header" style="color: #ffd700;">    💰 100mil (Capital) <span class="count-pill">10</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">9.5MW Solar — EPCC + Financing (Northern Solar + Founder Energy)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">AN9baba 3-Stage IP Plan (321 months)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">BE120 IP Launch (Nov-Dec 2026) — Ooi Tze Liang as PIC</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Blueprint Study Tour (Quarterly)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Goopher Project (Landasan)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Purchasing Guarantor (PG) Removal — 35 PGs</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Purchasing Centralisation (PO approval through Ms Sue)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Shareholder Strategy Agenda (Oct 2026)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Solar Tracker</span>  <span class="active-proj-meta"></span></li></ul></div><div class="active-proj-axis" style="border-left: 3px solid #f78fb3;">  <div class="active-proj-axis-header" style="color: #f78fb3;">    💞 成为祝福 (People) <span class="count-pill">2</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">SoonYik OS Build + WD Operating System Restructure</span>  <span class="active-proj-meta"></span></li></ul></div>
+        <div class="active-proj-axis" data-axis-block="💰 100mil (Capital)" style="border-left: 3px solid #ffd700;">  <div class="active-proj-axis-header" style="color: #ffd700;">    💰 100mil (Capital) <span class="count-pill">10</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">9.5MW Solar — EPCC + Financing (Northern Solar + Founder Energy)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">AN9baba 3-Stage IP Plan (321 months)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">BE120 IP Launch (Nov-Dec 2026) — Ooi Tze Liang as PIC</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Blueprint Study Tour (Quarterly)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Goopher Project (Landasan)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item" data-axis="💰 100mil (Capital)">  <span class="active-proj-name">Purchasing Guarantor (PG) Removal — 35 PGs</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item" data-axis="💰 100mil (Capital)">  <span class="active-proj-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item" data-axis="💰 100mil (Capital)">  <span class="active-proj-name">WD Purchasing Centralisation (PO approval through Ms Sue)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Shareholder Strategy Agenda (Oct 2026)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Solar Tracker</span>  <span class="active-proj-meta"></span></li></ul></div><div class="active-proj-axis" data-axis-block="💞 成为祝福 (People)" style="border-left: 3px solid #f78fb3;">  <div class="active-proj-axis-header" style="color: #f78fb3;">    💞 成为祝福 (People) <span class="count-pill">2</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item" data-axis="💞 成为祝福 (People)|💰 100mil (Capital)">  <span class="active-proj-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item" data-axis="💞 成为祝福 (People)|💰 100mil (Capital)">  <span class="active-proj-name">SoonYik OS Build + WD Operating System Restructure</span>  <span class="active-proj-meta"></span></li></ul></div>
       </div>
     </div>
   </div>
@@ -1175,50 +1263,127 @@
     <span class="review-reopen-icon">📖</span>
     <span class="review-reopen-label">Review last 7 days</span>
   </button>
+  </div><!-- /.gate-only -->
 
-  <!-- AXIS FILTER (2026-10-13) — clicking 💰/💞/🌏 buttons filters the
-       Action queue to items linked to that axis. Each project / opp
-       carries a 北极星 Axis tag in Airtable; the JS reads that tag
-       from the row's data-axis attribute and shows / hides it. -->
+  <!-- PASSWORD GATE SCRIPT — runs on every page load. The cleartext code
+       does not appear in this source (only its SHA-256 hash is baked in).
+       localStorage remembers the unlock for 12 hours so the gate doesn't
+       re-prompt on every refresh. See skill rule SOON YIK OS — password
+       rotation (2026-10-13) for the "no cleartext in any persistent
+       store" policy. -->
   <script>
     (function() {
-      const FILTER_KEY = 'soonyik_axis_filter';
+      const ACCESS_HASH = "8301d2c253bbf4f957ac66f6cda74bec13ea534476711c7035f0173f0a77cac6";
+      const UNLOCK_KEY = 'soonyik_pw_unlock';
+      const UNLOCK_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
+
+      async function sha256(str) {
+        const buf = new TextEncoder().encode(str);
+        const hash = await crypto.subtle.digest('SHA-256', buf);
+        return Array.from(new Uint8Array(hash))
+          .map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function check() {
+        try {
+          const raw = localStorage.getItem(UNLOCK_KEY);
+          if (raw) {
+            const obj = JSON.parse(raw);
+            if (obj.h === ACCESS_HASH && (Date.now() - obj.t) < UNLOCK_TTL_MS) {
+              unlock();
+              return;
+            }
+          }
+        } catch (e) { /* ignore */ }
+
+        document.body.classList.remove('gate-unlocked');
+        document.body.classList.add('gate-locked');
+
+        const input = document.getElementById('pw-input');
+        const btn = document.getElementById('pw-submit');
+        const err = document.getElementById('pw-error');
+
+        async function attempt() {
+          const v = (input.value || '').trim();
+          if (!v) { err.textContent = 'Enter the access code.'; err.classList.add('show'); return; }
+          const h = await sha256(v);
+          if (h === ACCESS_HASH) {
+            try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ h: ACCESS_HASH, t: Date.now() })); } catch (e) {}
+            unlock();
+          } else {
+            err.textContent = 'Wrong code. Try again.';
+            err.classList.add('show');
+            input.select();
+          }
+        }
+
+        btn.addEventListener('click', attempt);
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') { e.preventDefault(); attempt(); }
+        });
+      }
+
+      function unlock() {
+        document.body.classList.remove('gate-locked');
+        document.body.classList.add('gate-unlocked');
+        const g = document.getElementById('pw-gate');
+        if (g) g.style.display = 'none';
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', check);
+      } else {
+        check();
+      }
+    })();
+  </script>
+
+  <!-- AXIS FILTER (2026-10-13) — clicking 💰/💞/🌏 buttons filters the
+       ACTIVE PROJECTS list (in the pane below the system pane) to projects
+       linked to that axis. Per user correction: filtering is for the
+       ACTIVE PROJECTS list, NOT the reminders (action queue). The action
+       queue always shows everything due. The active projects pane carries
+       data-axis on each .active-proj-item. -->
+  <script>
+    (function() {
+      const FILTER_KEY = 'soonyik_proj_axis_filter';
       const goals = document.querySelectorAll('[data-axis-filter]');
       const status = document.getElementById('filter-status');
-      const dayWrappers = document.querySelectorAll('.week-day');
+      const axisBlocks = document.querySelectorAll('.active-proj-axis');
+      const summaryPill = document.querySelector('.active-projects-pane .count-pill');
 
       function applyFilter(axis) {
-        // axis === "" means clear
         let visibleCount = 0;
-        dayWrappers.forEach(function(day) {
-          let anyVisible = false;
-          day.querySelectorAll('.week-item').forEach(function(item) {
-            const ax = (item.getAttribute('data-axis') || '').split('|');
-            const match = axis === '' || ax.indexOf(axis) >= 0;
+        axisBlocks.forEach(function(block) {
+          let anyItemVisible = false;
+          block.querySelectorAll('.active-proj-item').forEach(function(item) {
+            const itemAxes = (item.getAttribute('data-axis') || '').split('|');
+            const match = axis === '' || itemAxes.indexOf(axis) >= 0;
             item.style.display = match ? '' : 'none';
-            if (match) anyVisible = true;
+            if (match) {
+              visibleCount++;
+              anyItemVisible = true;
+            }
           });
-          day.style.display = anyVisible ? '' : 'none';
-          visibleCount += day.querySelectorAll('.week-item:not([style*="display: none"])').length;
+          block.style.display = anyItemVisible ? '' : 'none';
         });
 
-        // Visual: highlight active goal
         goals.forEach(function(g) {
           g.classList.toggle('active', g.getAttribute('data-axis-filter') === axis);
         });
 
-        // Update status pill
         if (status) {
           if (axis) {
             status.style.display = '';
-            status.textContent = 'filter: ' + axis + ' (' + visibleCount + ' items)';
+            status.textContent = ' — filtered: ' + axis + ' (' + visibleCount + ' projects)';
           } else {
             status.style.display = 'none';
             status.textContent = '';
           }
         }
 
-        // Persist (in-session)
+        if (summaryPill) summaryPill.textContent = visibleCount + '';
+
         try { sessionStorage.setItem(FILTER_KEY, axis); } catch(e) {}
       }
 
@@ -1234,12 +1399,13 @@
         });
       });
 
-      // Restore last filter from this session if any
       try {
         const last = sessionStorage.getItem(FILTER_KEY);
-        if (last !== null) applyFilter(last);
+        if (last !== null && last !== '') applyFilter(last);
       } catch(e) {}
     })();
+  </script>
+
   </script>
 
   <script>
@@ -1454,5 +1620,5 @@
   <footer>
     Source: Airtable base SOON YIK OS (appXP8uHbozypGwMw) + vault 01_Daily/ · Auto-generated by <code>build_dashboard.py</code>
   </footer>
-<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-13 14:10 MYT</div></body>
+<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-13 14:19 MYT</div></body>
 </html>
