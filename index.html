@@ -6,82 +6,6 @@
   <meta name="dashboard-action-endpoint" content="https://soon-yik-os-actions.vercel.app/api/dashboard-action">
   <title>SOON YIK OS — Weekly Dashboard</title>
   <style>
-    /* PASSWORD GATE (2026-10-13) — hides dashboard until user enters the
-       correct password. localStorage remembers the unlock for 12 hours
-       so the gate doesn't re-prompt on every refresh during a session.
-       Note: this is client-side obfuscation. Anyone determined can read
-       the password in the JS source. For real security, put the
-       dashboard behind Cloudflare Access or similar server-side auth. */
-    body.gate-locked .gate-only { display: none; }
-    .pw-gate {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #0a0e14;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 24px;
-    }
-    body.gate-locked .pw-gate { display: flex; }
-    body.gate-unlocked .pw-gate { display: none; }
-    .pw-gate-card {
-      background: #1a1f29;
-      border: 1px solid #2d3340;
-      border-radius: 12px;
-      padding: 32px 36px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-    }
-    .pw-gate-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffd700;
-      margin-bottom: 8px;
-    }
-    .pw-gate-subtitle {
-      color: #9aa0a6;
-      font-size: 13px;
-      margin-bottom: 22px;
-    }
-    .pw-gate-input {
-      width: 100%;
-      padding: 12px 14px;
-      font-size: 16px;
-      background: #0f1419;
-      border: 1px solid #2d3340;
-      border-radius: 6px;
-      color: #e8eaed;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      letter-spacing: 4px;
-      text-align: center;
-    }
-    .pw-gate-input:focus {
-      outline: none;
-      border-color: #ffd700;
-    }
-    .pw-gate-submit {
-      margin-top: 14px;
-      width: 100%;
-      padding: 12px 14px;
-      background: #ffd700;
-      color: #0a0e14;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .pw-gate-submit:hover { background: #ffea7a; }
-    .pw-gate-error {
-      margin-top: 12px;
-      color: #ff6b6b;
-      font-size: 12px;
-      display: none;
-    }
-    .pw-gate-error.show { display: block; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -908,19 +832,8 @@
     }
   </style>
 </head>
-<body class="gate-locked">
-  <div class="pw-gate" id="pw-gate">
-    <div class="pw-gate-card">
-      <div class="pw-gate-title">🔒 SOON YIK OS Dashboard</div>
-      <div class="pw-gate-subtitle">Enter the access code to view the dashboard.</div>
-      <input type="password" id="pw-input" class="pw-gate-input" autocomplete="off"
-             inputmode="numeric" pattern="[0-9]*" maxlength="20"
-             placeholder="• • • •" aria-label="access code" />
-      <button id="pw-submit" class="pw-gate-submit">Unlock</button>
-      <div id="pw-error" class="pw-gate-error">Wrong code. Try again.</div>
-    </div>
-  </div>
-  <header class="gate-only">
+<body>
+  <header>
     <h1>⏰ SOON YIK OS — Weekly Dashboard</h1>
     <div class="meta">
       <strong>Tuesday, 13 October 2026</strong> ·
@@ -950,7 +863,7 @@
                 <div class="week-day-rel">+3d</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item high" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item high" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Sell energy portfolio to WeiDun — Strategic decision</div>        <div class="week-item-source">Opportunity (Active)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Cash-Flow Restructure</div>        <div class="week-item-source">Opportunity (Validating)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Snooze / re-remind">⏰</button></div></div>
+                <div class="week-item high" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" data-axis="💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="rec7YPt93mVjVV73X" data-table="Project Actions" data-label="All future POs from Wawasan Dengkil need Ms Sue&#39;s approval — rollout (WD Purchasing Centralisation (PO approval through Ms Sue))" title="Snooze / re-remind">⏰</button></div></div><div class="week-item high" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" data-axis="💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recIBufbeMREtAS1Z" data-table="Project Actions" data-label="35 PGs across 5 companies (incl. quarry side) collection back (Purchasing Guarantor (PG) Removal — 35 PGs)" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" data-axis="💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Sell energy portfolio to WeiDun — Strategic decision</div>        <div class="week-item-source">Opportunity (Active)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recCs1oG4lzPPT6j6" data-table="Opportunities" data-label="Sell energy portfolio to WeiDun — Strategic decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" data-axis="💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">WD Cash-Flow Restructure</div>        <div class="week-item-source">Opportunity (Validating)</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recTfQIQVBtYQE4KM" data-table="Opportunities" data-label="WD Cash-Flow Restructure" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
             <div class="week-day">
@@ -959,7 +872,7 @@
                 <div class="week-day-rel">+6d</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up: Mid-day sweep: overdue + Q-prefix cleanup</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item high" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Snooze / re-remind">⏰</button></div></div>
+                <div class="week-item" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up: Mid-day sweep: overdue + Q-prefix cleanup</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recXd6C7ydZQpjAi0" data-table="Project Actions" data-label="Follow up: Mid-day sweep: overdue + Q-prefix cleanup" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" data-axis="💞 成为祝福 (People)|💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="reccWbAvnWYzmkfpf" data-table="Project Actions" data-label="Follow up Transport Dept let-go — see WD Transport Department Let-Go Decision" title="Snooze / re-remind">⏰</button></div></div><div class="week-item high" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" data-axis="💞 成为祝福 (People)|💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recxtfuFzbUmiaPdp" data-table="Project Actions" data-label="Chase WD cash-flow restructuring plan — see WD Cash-Flow Restructure opportunity" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
             <div class="week-day">
@@ -968,39 +881,26 @@
                 <div class="week-day-rel">+7d</div>
               </div>
               <div class="week-day-items">
-                <div class="week-item high" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Snooze / re-remind">⏰</button></div></div><div class="week-item critical" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Woei Shyong Case — force Warisan Infra to pay + brief another lawyer</div>    <div class="week-item-parent">Woei Shyong Case — Court Order to Warisan Infra</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Snooze / re-remind">⏰</button></div></div>
+                <div class="week-item high" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" data-axis="💰 100mil (Capital)|🌏 体验世界 (Experience)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)</div>        <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="rec5nfBvdMTBhANcP" data-table="Project Actions" data-label="Bamboo Plantation: 贺总 advisor arrival coordination (Bamboo Plantation (KunMing) — Biomass feedstock for 30MW)" title="Snooze / re-remind">⏰</button></div></div><div class="week-item" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" data-axis="💞 成为祝福 (People)|💰 100mil (Capital)">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity</div>    <div class="week-item-parent">SoonYik OS Build + WD Operating System Restructure</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recJrK4s32pY81Xao" data-table="Project Actions" data-label="Follow up Kah Sheng China EPCC tour — see China EPCC Consortium Outreach opportunity" title="Snooze / re-remind">⏰</button></div></div><div class="week-item critical" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer">  <div class="week-item-kind">🚨</div>  <div class="week-item-body">    <div class="week-item-verb">Woei Shyong Case — force Warisan Infra to pay + brief another lawyer</div>    <div class="week-item-parent">Woei Shyong Case — Court Order to Warisan Infra</div>    <div class="week-item-source">Project Action</div>  </div>  <div class="week-item-actions">  <button class="week-action-btn done" data-action="done" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Mark done">✓</button>  <button class="week-action-btn remark" data-action="remark" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Add remarks">📝</button>  <button class="week-action-btn snooze" data-action="snooze" data-recid="recluEkht0kepKBJG" data-table="Project Actions" data-label="Woei Shyong Case — force Warisan Infra to pay + brief another lawyer" title="Snooze / re-remind">⏰</button></div></div>
               </div>
             </div>
     </div>
     
     <div class="pane system-pane">
-      <h2>🧭 SYSTEM</h2>
+      <h2>🧭 SYSTEM <span class="filter-status" id="filter-status" style="display:none"></span></h2>
       <div class="system-identity">
         <div class="system-identity-label">Identity (IPVMCP 2026)</div>
         <div class="system-identity-line">**A builder who develops people, builds businesses, and transforms places.** 一个成就人才、打造事业、改变地方的建设者。</div>
       </div>
       <div class="system-grid">
-        <div class="system-goal">  <div class="system-goal-name">💰 100mil (Capital)</div>  <div class="system-goal-desc">Economic engines + cash generation + long-term value. Personal RM100m; group (WD team) RM500m.</div>  <div class="system-goal-count">    <span class="count-pill">30</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div><div class="system-goal">  <div class="system-goal-name">💞 成为祝福 (People)</div>  <div class="system-goal-desc">Every interaction leaves the other person better off. Relationship network + connecting people + creating opportunities for others.</div>  <div class="system-goal-count">    <span class="count-pill">5</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div><div class="system-goal">  <div class="system-goal-name">🌏 体验世界 (Experience)</div>  <div class="system-goal-desc">Live, not just visit. The system carries complexity so you don&#39;t personally have to hold everything.</div>  <div class="system-goal-count">    <span class="count-pill">2</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div>
+        <div class="system-goal" data-axis-filter="💰 100mil (Capital)" role="button" tabindex="0" title="Click to filter the action queue to this axis">  <div class="system-goal-name">💰 100mil (Capital)</div>  <div class="system-goal-desc">Economic engines + cash generation + long-term value. Personal RM100m; group (WD team) RM500m.</div>  <div class="system-goal-count">    <span class="count-pill">30</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div><div class="system-goal" data-axis-filter="💞 成为祝福 (People)" role="button" tabindex="0" title="Click to filter the action queue to this axis">  <div class="system-goal-name">💞 成为祝福 (People)</div>  <div class="system-goal-desc">Every interaction leaves the other person better off. Relationship network + connecting people + creating opportunities for others.</div>  <div class="system-goal-count">    <span class="count-pill">5</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div><div class="system-goal" data-axis-filter="🌏 体验世界 (Experience)" role="button" tabindex="0" title="Click to filter the action queue to this axis">  <div class="system-goal-name">🌏 体验世界 (Experience)</div>  <div class="system-goal-desc">Live, not just visit. The system carries complexity so you don&#39;t personally have to hold everything.</div>  <div class="system-goal-count">    <span class="count-pill">2</span>     <span class="system-goal-count-label">active projects serving this axis</span>  </div></div><div class="system-goal system-goal-reset" data-axis-filter="" role="button" tabindex="0" title="Show all items">  <div class="system-goal-name">↺ Show all</div>  <div class="system-goal-desc">Click to clear the axis filter and show every item in the action queue.</div></div>
       </div>
     </div>
     
     <div class="pane active-projects-pane">
-      <h2>📁 ACTIVE PROJECTS <span class="count-pill">14</span></h2>
+      <h2>📁 ACTIVE PROJECTS <span class="count-pill">12</span></h2>
       <div class="active-proj-grid">
-        <div class="active-proj-axis" style="border-left: 3px solid #ffd700;">  <div class="active-proj-axis-header" style="color: #ffd700;">    💰 100mil (Capital) <span class="count-pill">12</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">9.5MW Solar — EPCC + Financing (Northern Solar + Founder Energy)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">AN9baba 3-Stage IP Plan (321 months)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">BE120 IP Launch (Nov-Dec 2026) — Ooi Tze Liang as PIC</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Blueprint Study Tour (Quarterly)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Goopher Project (Landasan)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Purchasing Guarantor (PG) Removal — 35 PGs</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Purchasing Centralisation (PO approval through Ms Sue)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Purchasing — Master Account + No-PG Policy (1/11/2026)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sun 01 Nov</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Shareholder Strategy Agenda (Oct 2026)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Solar Tracker</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Weekly Meetings Cadence (Purchasing / Group-Project / Shareholder)</span>  <span class="active-proj-meta"></span></li></ul></div><div class="active-proj-axis" style="border-left: 3px solid #f78fb3;">  <div class="active-proj-axis-header" style="color: #f78fb3;">    💞 成为祝福 (People) <span class="count-pill">2</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">SoonYik OS Build + WD Operating System Restructure</span>  <span class="active-proj-meta"></span></li></ul></div>
-      </div>
-    </div>
-    
-    <div class="pane people-pane">
-      <h2>👥 PEOPLE TO KNOW BETTER <span class="count-pill">5</span></h2>
-      <div class="people-pane-note">
-        People records with no role, no next action, and no project links —
-        relationships that haven't been developed yet in Airtable.
-        Surface these when you have a fresh interaction to log, a Role to fill in, or a Project/Opp to link.
-      </div>
-      <ul class="people-list"><li class="person-item">  <div class="person-name">Clarissa Chia</div>  <div class="person-meta"><em style="color:#ffa94d;">no role · no next action · no project links</em></div></li><li class="person-item">  <div class="person-name">DONG Hao</div>  <div class="person-meta"><em style="color:#ffa94d;">no role · no next action · no project links</em></div></li><li class="person-item">  <div class="person-name">Karmun</div>  <div class="person-meta"><em style="color:#ffa94d;">no role · no next action · no project links</em></div></li><li class="person-item">  <div class="person-name">Mark Ong</div>  <div class="person-meta"><em style="color:#ffa94d;">no role · no next action · no project links</em></div></li><li class="person-item">  <div class="person-name">Yap Yen</div>  <div class="person-meta"><em style="color:#ffa94d;">no role · no next action · no project links</em></div></li></ul>
-      <div class="people-pane-foot">
-        0 more low-info people hidden — see <a href="file:///Users/clarissa/Desktop/soonyik_vault/05_People_Hub.md" target="_blank">05_People_Hub.md</a> for full list.
+        <div class="active-proj-axis" style="border-left: 3px solid #ffd700;">  <div class="active-proj-axis-header" style="color: #ffd700;">    💰 100mil (Capital) <span class="count-pill">10</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">9.5MW Solar — EPCC + Financing (Northern Solar + Founder Energy)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">AN9baba 3-Stage IP Plan (321 months)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">BE120 IP Launch (Nov-Dec 2026) — Ooi Tze Liang as PIC</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Blueprint Study Tour (Quarterly)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Goopher Project (Landasan)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">Purchasing Guarantor (PG) Removal — 35 PGs</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">Twin Hi Tech Cash-Flow Plan (Oct 2026 - Jan 2027)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Purchasing Centralisation (PO approval through Ms Sue)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Fri 16 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Shareholder Strategy Agenda (Oct 2026)</span>  <span class="active-proj-meta"></span></li><li class="active-proj-item">  <span class="active-proj-name">WD Solar Tracker</span>  <span class="active-proj-meta"></span></li></ul></div><div class="active-proj-axis" style="border-left: 3px solid #f78fb3;">  <div class="active-proj-axis-header" style="color: #f78fb3;">    💞 成为祝福 (People) <span class="count-pill">2</span>  </div>  <ul class="active-proj-list"><li class="active-proj-item">  <span class="active-proj-name">BE120 3.0 — Cohort (Tiamo 6-month programme)</span>  <span class="active-proj-meta"> · next <span class="next-dl">Sat 31 Oct</span></span></li><li class="active-proj-item">  <span class="active-proj-name">SoonYik OS Build + WD Operating System Restructure</span>  <span class="active-proj-meta"></span></li></ul></div>
       </div>
     </div>
   </div>
@@ -1275,88 +1175,70 @@
     <span class="review-reopen-icon">📖</span>
     <span class="review-reopen-label">Review last 7 days</span>
   </button>
-  </div><!-- /.gate-only -->
 
-  <!-- PASSWORD GATE SCRIPT — runs on every page load. Checks the unlock
-       state stored in localStorage; if valid, swaps body class to
-       gate-unlocked and hides the gate. If invalid, the user must type the
-       code (compared to a hashed value below). -->
+  <!-- AXIS FILTER (2026-10-13) — clicking 💰/💞/🌏 buttons filters the
+       Action queue to items linked to that axis. Each project / opp
+       carries a 北极星 Axis tag in Airtable; the JS reads that tag
+       from the row's data-axis attribute and shows / hides it. -->
   <script>
     (function() {
-      // SHA-256 of the dashboard access code (computed once at build time).
-      // Storing the hash means the cleartext code never appears in the public
-      // HTML source — anyone viewing source sees only the hash. The hash is
-      // 64-char hex; replacing it with anything else breaks the unlock.
-      // (Code set 2026-10-13; rotates when Soon Yik asks to change it.)
-      const ACCESS_HASH = "8301d2c253bbf4f957ac66f6cda74bec13ea534476711c7035f0173f0a77cac6";
+      const FILTER_KEY = 'soonyik_axis_filter';
+      const goals = document.querySelectorAll('[data-axis-filter]');
+      const status = document.getElementById('filter-status');
+      const dayWrappers = document.querySelectorAll('.week-day');
 
-      const UNLOCK_KEY = 'soonyik_pw_unlock';
-      const UNLOCK_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
+      function applyFilter(axis) {
+        // axis === "" means clear
+        let visibleCount = 0;
+        dayWrappers.forEach(function(day) {
+          let anyVisible = false;
+          day.querySelectorAll('.week-item').forEach(function(item) {
+            const ax = (item.getAttribute('data-axis') || '').split('|');
+            const match = axis === '' || ax.indexOf(axis) >= 0;
+            item.style.display = match ? '' : 'none';
+            if (match) anyVisible = true;
+          });
+          day.style.display = anyVisible ? '' : 'none';
+          visibleCount += day.querySelectorAll('.week-item:not([style*="display: none"])').length;
+        });
 
-      async function sha256(str) {
-        const buf = new TextEncoder().encode(str);
-        const hash = await crypto.subtle.digest('SHA-256', buf);
-        return Array.from(new Uint8Array(hash))
-          .map(b => b.toString(16).padStart(2, '0')).join('');
-      }
+        // Visual: highlight active goal
+        goals.forEach(function(g) {
+          g.classList.toggle('active', g.getAttribute('data-axis-filter') === axis);
+        });
 
-      async function check() {
-        // If localStorage has a fresh unlock, skip the prompt
-        try {
-          const raw = localStorage.getItem(UNLOCK_KEY);
-          if (raw) {
-            const obj = JSON.parse(raw);
-            if (obj.h === ACCESS_HASH && (Date.now() - obj.t) < UNLOCK_TTL_MS) {
-              unlock();
-              return;
-            }
-          }
-        } catch (e) { /* ignore */ }
-
-        // Show the gate
-        document.body.classList.remove('gate-unlocked');
-        document.body.classList.add('gate-locked');
-
-        const input = document.getElementById('pw-input');
-        const btn = document.getElementById('pw-submit');
-        const err = document.getElementById('pw-error');
-
-        async function attempt() {
-          const v = (input.value || '').trim();
-          if (!v) { err.textContent = 'Enter the access code.'; err.classList.add('show'); return; }
-          const h = await sha256(v);
-          if (h === ACCESS_HASH) {
-            try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ h: ACCESS_HASH, t: Date.now() })); } catch (e) {}
-            unlock();
+        // Update status pill
+        if (status) {
+          if (axis) {
+            status.style.display = '';
+            status.textContent = 'filter: ' + axis + ' (' + visibleCount + ' items)';
           } else {
-            err.textContent = 'Wrong code. Try again.';
-            err.classList.add('show');
-            input.select();
+            status.style.display = 'none';
+            status.textContent = '';
           }
         }
 
-        btn.addEventListener('click', attempt);
-        input.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') { e.preventDefault(); attempt(); }
+        // Persist (in-session)
+        try { sessionStorage.setItem(FILTER_KEY, axis); } catch(e) {}
+      }
+
+      goals.forEach(function(g) {
+        g.addEventListener('click', function() {
+          applyFilter(g.getAttribute('data-axis-filter') || '');
         });
-        // Don't auto-focus the password field — that pops a numeric keyboard
-        // on mobile which is bad UX if the access code has letters. Focus only
-        // if the device supports it.
-        // (intentionally not auto-focusing)
-      }
+        g.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            applyFilter(g.getAttribute('data-axis-filter') || '');
+          }
+        });
+      });
 
-      function unlock() {
-        document.body.classList.remove('gate-locked');
-        document.body.classList.add('gate-unlocked');
-        const g = document.getElementById('pw-gate');
-        if (g) g.style.display = 'none';
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', check);
-      } else {
-        check();
-      }
+      // Restore last filter from this session if any
+      try {
+        const last = sessionStorage.getItem(FILTER_KEY);
+        if (last !== null) applyFilter(last);
+      } catch(e) {}
     })();
   </script>
 
@@ -1572,5 +1454,5 @@
   <footer>
     Source: Airtable base SOON YIK OS (appXP8uHbozypGwMw) + vault 01_Daily/ · Auto-generated by <code>build_dashboard.py</code>
   </footer>
-<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-13 13:54 MYT</div></body>
+<div style="position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;z-index:100;">⏰ SOON YIK OS · Last updated: 2026-10-13 14:02 MYT</div></body>
 </html>
